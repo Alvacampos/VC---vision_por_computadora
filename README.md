@@ -14,46 +14,31 @@ Resultado: se registró **1 aparición de vehículo blanco** (frames 132 a 1185,
 
 ## Parte 2: entrenamiento, integración y mejora
 
-La Parte 2 está agregada al final del mismo notebook (`parte1_pipeline_vehiculos_blancos.ipynb`), a partir de la sección *Evaluación integradora – Parte 2*. Entrena un **clasificador vehículo / no vehículo** con *transfer learning* (MobileNetV2, Keras) y lo integra al pipeline de la Parte 1 como segundo filtro de las cajas del detector.
+La Parte 2 está al final del mismo notebook, a partir de la sección *Parte 2 – Entrenamiento, integración y mejora*. Entrena un **clasificador vehículo / no vehículo** con *transfer learning* (MobileNetV2, Keras) y lo agrega al pipeline de la Parte 1 como segundo filtro de las cajas del detector.
 
-- **Dataset:** imágenes de vehículos y no vehículos de Udacity (GTI y KITTI). Se excluye la carpeta `Extras`, recortada del mismo video, para evitar *data leakage*. El split es 70/15/15 por bloques contiguos de cada secuencia. Además se usa un test externo con 1.685 cajas del detector sobre el video, etiquetadas a mano.
-- **Dos configuraciones:** A, extractor congelado, y B, *fine-tuning* de las últimas 30 capas. En el test del dataset dan 99,8 % y 99,9 % de *accuracy*. En el video conservan el 98,7 % y el 99,6 % de los vehículos, pero eliminan solo alrededor del 40 % de las cajas falsas, por cambio de dominio. Se elige B, que además es mucho más robusta a desenfoque y baja resolución.
-- **Pipeline final:** video → detector (conf ≥ 0,5) → verificador (p ≥ 0,5) → color HSV → tracking y eventos → CSV y video anotado. Los umbrales se eligieron con la primera mitad del video y se evaluaron con la segunda. Conserva el 96,8 % de las cajas reales, contra el 93,2 % de la Parte 1, y registra el auto blanco en los frames 131 a 1190. Agrega un evento falso de 0,1 s.
-- **Mejora prioritaria:** sumar negativos del dominio (vegetación, carteles y cajas parciales) y volver a medir con el mismo protocolo.
-
-Salidas en `resultados_p2/`: comparación de configuraciones y de pipelines, grilla de umbrales, prueba de estrés, eventos, detecciones con la probabilidad del verificador, split del dataset, video anotado (`video_anotado_p2.mp4`) y figuras en `evidencias/`. Los modelos entrenados no se suben porque el notebook los regenera en unos minutos.
-
-La Parte 2 necesita además `tensorflow` y `scikit-learn` (vienen en Colab) y descarga el dataset de Udacity, de unos 125 MB, la primera vez. Con GPU agrega unos 5 minutos de ejecución.
+- **Dataset:** imágenes de vehículos y no vehículos de Udacity (GTI y KITTI). Se deja afuera la carpeta `Extras`, recortada del mismo video, para evitar *data leakage*. El split es 70/15/15 por bloques de cada secuencia, no al azar. Además se prueba con las 1.685 cajas que el detector encuentra en el video, etiquetadas a mano.
+- **Dos configuraciones:** A, red base congelada, y B, *fine-tuning* de las últimas 30 capas. Las dos dan 99,9 % en el test del dataset. En el video conservan más del 99 % de los autos, pero eliminan solo alrededor del 40 % de las cajas falsas, por cambio de dominio. Se elige B, que elimina apenas más falsas.
+- **Pipeline final:** video → detector (confianza ≥ 0,5) → clasificador (p ≥ 0,5) → color HSV → seguimiento y eventos → CSV y video anotado. Los umbrales se eligieron con la primera mitad del video. Conserva el 96,6 % de las cajas de autos, contra el 93,2 % de la Parte 1, y registra los mismos 4 eventos, todos correctos.
+- **Mejora prioritaria:** agregar al entrenamiento imágenes "no vehículo" de este tipo de ruta (arbustos, carteles) y volver a medir.
 
 ## Estructura del repositorio
 
-| Archivo | Descripción |
+| Archivo o carpeta | Descripción |
 |---|---|
-| `parte1_colab.ipynb` | Notebook de la Parte 1 (Colab). Incluye inspección del video, preprocesamiento justificado, detección y segmentación por color, reglas temporales, registro de eventos en CSV, evidencia visual y validación manual. |
-| `Parte 1 - Informe.pdf` | Informe de la Parte 1, con las cifras del notebook y citas por página al material de la materia. |
-| `README.md` | Este archivo. |
+| `evaluacion_integradora_vc.ipynb` | Notebook de Colab con las dos partes, ya ejecutado. |
+| `data/` | Video de entrada (`project_video.mp4` de udacity/CarND-Vehicle-Detection, licencia MIT). La Parte 2 descarga además acá el dataset de Udacity, de unos 125 MB. |
+| `modelos/` | Detector MobileNet-SSD en formato Caffe (chuanqi305/MobileNet-SSD, licencia MIT). |
+| `resultados_parte1/` | Salidas de la Parte 1: eventos y detecciones en CSV, parámetros, indicadores de validación, video anotado y evidencias. |
+| `resultados_parte2/` | Salidas de la Parte 2: comparación A/B, eventos del pipeline final, detecciones con la probabilidad del clasificador, split del dataset, matrices de confusión, errores y video anotado. Los modelos entrenados no se suben porque el notebook los regenera en unos minutos. |
 
 ## Cómo ejecutar
 
-El notebook está pensado para **Google Colab**. También corre en Jupyter local con Python 3.
+1. Abrir `evaluacion_integradora_vc.ipynb` en Google Colab (botón al principio del notebook). Para la Parte 2 conviene usar GPU (*Entorno de ejecución → Cambiar tipo de entorno → T4*).
+2. Subir las carpetas `data/` y `modelos/` al panel de archivos de Colab, o clonar el repo en la sesión con `!git clone https://github.com/Alvacampos/VC---vision_por_computadora` y entrar con `%cd VC---vision_por_computadora`.
+3. Ejecutar todas las celdas (*Entorno de ejecución → Ejecutar todas*). La Parte 1 tarda unos 3 minutos y la Parte 2 unos 5 más con GPU. La Parte 2 usa variables de la Parte 1, así que hay que ejecutar las dos en orden.
 
-1. Abrir el notebook en Colab.
-2. Ejecutar todas las celdas (*Entorno de ejecución → Ejecutar todas*). La corrida completa tarda unos 2–3 minutos.
-
-La primera celda prepara el entorno:
-
-- Verifica que OpenCV sea 4.x, porque OpenCV 5 ya no incluye `cv2.dnn.readNetFromCaffe`. Si hace falta, instala `opencv-python-headless<5` y pide reiniciar la sesión.
-- Descarga el video y el modelo desde sus repositorios públicos: `project_video.mp4` de [udacity/CarND-Vehicle-Detection](https://github.com/udacity/CarND-Vehicle-Detection) y MobileNet-SSD de [chuanqi305/MobileNet-SSD](https://github.com/chuanqi305/MobileNet-SSD), ambos con licencia MIT. Los guarda en `data/` y `modelos/`, que no están incluidas en el repo.
-- Si no hay acceso a internet, hay que subir `data/video_transito.mp4`, `modelos/deploy.prototxt` y `modelos/mobilenet_iter_73000.caffemodel` al panel de archivos de Colab. En local, se dejan en esas mismas carpetas junto al notebook.
-
-Las salidas se guardan en `resultados/`:
-
-- `eventos_vehiculos_blancos.csv`, `eventos_todos.csv` y `detecciones.csv`
-- `parametros.json` e `indicadores_validacion.csv`
-- `video_anotado.mp4` y las imágenes de `evidencias/`
-
-Dependencias: `opencv-python` (4.x), `numpy`, `pandas`, `matplotlib`. Todas vienen instaladas en Colab; `ffmpeg` es opcional y solo se usa para recodificar el video anotado.
+La primera celda instala OpenCV 4.10, porque OpenCV 5 ya no incluye `cv2.dnn.readNetFromCaffe`. El resto de las dependencias (`numpy`, `pandas`, `matplotlib`, `tensorflow`, `scikit-learn`) ya vienen en Colab. `ffmpeg` solo se usa para recodificar los videos anotados.
 
 ## Uso de herramientas de IA
 
-Este trabajo se desarrolló con la ayuda de Claude (Anthropic), un asistente de IA. El autor resolvió el examen, eligió el caso de aplicación (video de tránsito y vehículos blancos) y revisó y aprobó cada paso. El asistente colaboró en la implementación del notebook y en la ejecución y ajuste de parámetros (umbral de confianza y ventana temporal). También colaboró en la revisión manual de los eventos y en la redacción del informe, bajo la supervisión del autor, tomando como referencia el material de la materia.
+Este trabajo se desarrolló con la ayuda de Claude (Anthropic), un asistente de IA. El autor resolvió el examen, eligió el caso de aplicación (video de tránsito y vehículos blancos) y revisó y aprobó cada paso. El asistente colaboró en la implementación del notebook (en la Parte 2, también en el entrenamiento y la integración) y en la ejecución y ajuste de parámetros (umbral de confianza y ventana temporal). También colaboró en la revisión manual de los eventos y en la redacción del informe, bajo la supervisión del autor, tomando como referencia el material de la materia.

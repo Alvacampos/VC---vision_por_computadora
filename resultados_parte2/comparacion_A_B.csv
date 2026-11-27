@@ -1,0 +1,5 @@
+modelo,conjunto,accuracy,recall vehículo,recall no vehículo
+A,dataset,0.999,1.0,0.997
+B,dataset,0.999,1.0,0.998
+A,video,0.977,0.998,0.417
+B,video,0.973,0.993,0.433

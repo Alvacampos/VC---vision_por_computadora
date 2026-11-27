@@ -1,2 +1,0 @@
-evento_id,evento,color,frame_inicio,frame_fin,timestamp_inicio,timestamp_fin,minuto,duracion_s,frames_detectado,conf_media,ratio_blanco,track_ids,frame_evidencia,caja_evidencia,revision
-1,aparicion_vehiculo_blanco,blanco,131,1190,00:05.24,00:47.60,0,42.4,968,0.961,0.547,1+8,232,"[1040, 396, 1278, 516]",V1 auto blanco
