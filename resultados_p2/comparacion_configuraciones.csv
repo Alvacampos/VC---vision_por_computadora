@@ -1,0 +1,5 @@
+modelo,conjunto,n,accuracy,balanced acc.,precisión vehículo,recall vehículo,F1 vehículo,recall no vehículo,tiempo entrenamiento (s)
+A congelado,test dataset (GTI/KITTI),1901,0.9984,0.9984,0.9992,0.9985,0.9989,0.9983,76
+B fine-tuning,test dataset (GTI/KITTI),1901,0.9995,0.9991,0.9992,1.0,0.9996,0.9983,162
+A congelado,video (cajas del detector),1685,0.9674,0.7102,0.9792,0.9871,0.9831,0.4333,76
+B fine-tuning,video (cajas del detector),1685,0.9751,0.6982,0.9782,0.9963,0.9872,0.4,162

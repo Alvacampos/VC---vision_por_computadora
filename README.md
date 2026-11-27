@@ -12,6 +12,19 @@ Resultado: se registró **1 aparición de vehículo blanco** (frames 132 a 1185,
 
 [Ver la presentación en Loom](https://www.loom.com/share/2b96e4e3814b4282adc066db50711815)
 
+## Parte 2: entrenamiento, integración y mejora
+
+La Parte 2 está agregada al final del mismo notebook (`parte1_pipeline_vehiculos_blancos.ipynb`), a partir de la sección *Evaluación integradora – Parte 2*. Entrena un **clasificador vehículo / no vehículo** con *transfer learning* (MobileNetV2, Keras) y lo integra al pipeline de la Parte 1 como segundo filtro de las cajas del detector.
+
+- **Dataset:** imágenes de vehículos y no vehículos de Udacity (GTI y KITTI). Se excluye la carpeta `Extras`, recortada del mismo video, para evitar *data leakage*. El split es 70/15/15 por bloques contiguos de cada secuencia. Además se usa un test externo con 1.685 cajas del detector sobre el video, etiquetadas a mano.
+- **Dos configuraciones:** A, extractor congelado, y B, *fine-tuning* de las últimas 30 capas. En el test del dataset dan 99,8 % y 99,9 % de *accuracy*. En el video conservan el 98,7 % y el 99,6 % de los vehículos, pero eliminan solo alrededor del 40 % de las cajas falsas, por cambio de dominio. Se elige B, que además es mucho más robusta a desenfoque y baja resolución.
+- **Pipeline final:** video → detector (conf ≥ 0,5) → verificador (p ≥ 0,5) → color HSV → tracking y eventos → CSV y video anotado. Los umbrales se eligieron con la primera mitad del video y se evaluaron con la segunda. Conserva el 96,8 % de las cajas reales, contra el 93,2 % de la Parte 1, y registra el auto blanco en los frames 131 a 1190. Agrega un evento falso de 0,1 s.
+- **Mejora prioritaria:** sumar negativos del dominio (vegetación, carteles y cajas parciales) y volver a medir con el mismo protocolo.
+
+Salidas en `resultados_p2/`: comparación de configuraciones y de pipelines, grilla de umbrales, prueba de estrés, eventos, detecciones con la probabilidad del verificador, split del dataset, video anotado (`video_anotado_p2.mp4`) y figuras en `evidencias/`. Los modelos entrenados no se suben porque el notebook los regenera en unos minutos.
+
+La Parte 2 necesita además `tensorflow` y `scikit-learn` (vienen en Colab) y descarga el dataset de Udacity, de unos 125 MB, la primera vez. Con GPU agrega unos 5 minutos de ejecución.
+
 ## Estructura del repositorio
 
 | Archivo | Descripción |
