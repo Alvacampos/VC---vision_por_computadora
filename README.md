@@ -8,6 +8,10 @@ La Parte 1 diseña e implementa un pipeline de visión por computadora que detec
 
 Resultado: se registró **1 aparición de vehículo blanco** (frames 132 a 1185, de 00:05.28 a 00:47.40) y 4 eventos en total. La revisión manual dio los 4 eventos como correctos, sin falsos positivos de color. El auto blanco tiene una cobertura de 88,7 % de los frames en que es visible.
 
+## Video de presentación
+
+[Ver la presentación en Loom](https://www.loom.com/share/2b96e4e3814b4282adc066db50711815)
+
 ## Estructura del repositorio
 
 | Archivo | Descripción |
