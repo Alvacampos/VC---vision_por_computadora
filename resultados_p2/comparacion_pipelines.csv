@@ -1,0 +1,5 @@
+variante,cajas,cajas reales conservadas,cajas falsas que pasan,eventos,eventos correctos,eventos falsos,evento blanco (frames)
+"P1: conf ≥ 0,75 (Parte 1)",1514,93.2%,0,4,4,0,132-1185
+"conf ≥ 0,25 sin verificador",1695,100.0%,60,8,5,3,130-1193
+"conf ≥ 0,25 + verificador",1664,99.6%,36,8,5,3,130-1193
+conf ≥ 0.5 + verificador ≥ 0.5 (elegido),1579,96.8%,5,5,4,1,131-1190
