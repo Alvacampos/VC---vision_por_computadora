@@ -26,6 +26,7 @@ La Parte 2 está al final del mismo notebook, a partir de la sección *Parte 2 �
 | Archivo o carpeta | Descripción |
 |---|---|
 | `evaluacion_integradora_vc.ipynb` | Notebook de Colab con las dos partes, ya ejecutado. |
+| `informe_evaluacion_integradora_vc.pdf` | Informe de las dos partes: problema, metodología, resultados, discusión (robustez y mejoras) y conclusiones, con citas por página al material de la materia. |
 | `data/` | Video de entrada (`project_video.mp4` de udacity/CarND-Vehicle-Detection, licencia MIT). La Parte 2 descarga además acá el dataset de Udacity, de unos 125 MB. |
 | `modelos/` | Detector MobileNet-SSD en formato Caffe (chuanqi305/MobileNet-SSD, licencia MIT). |
 | `resultados_parte1/` | Salidas de la Parte 1: eventos y detecciones en CSV, parámetros, indicadores de validación, video anotado y evidencias. |
