@@ -1,0 +1,5 @@
+evento_id,evento,color,frame_inicio,frame_fin,timestamp_inicio,timestamp_fin,minuto,duracion_s,frames_detectado,conf_media,ratio_blanco,track_ids,frame_evidencia,caja_evidencia,vehiculo_real,color_real,resultado
+1,aparicion_vehiculo_blanco,blanco,132,1185,00:05.28,00:47.40,0,42.16,923,0.975,0.547,1+5+7,231,"[1041, 395, 1278, 515]",V1 (auto blanco),blanco,correcto
+2,aparicion_vehiculo_otro_color,otro,287,292,00:11.48,00:11.68,0,0.24,6,0.902,0.064,2,291,"[0, 412, 131, 473]","Pickup y auto plateados en sombra, calzada opuesta, lejanos",plateado/gris,correcto (color ambiguo)
+3,aparicion_vehiculo_otro_color,otro,688,1259,00:27.52,00:50.36,0,22.88,564,0.976,0.017,4,718,"[999, 394, 1278, 624]",V2 (auto negro),negro,correcto
+4,aparicion_vehiculo_otro_color,otro,1245,1259,00:49.80,00:50.36,0,0.6,15,0.929,0.002,8,1259,"[1129, 384, 1278, 480]",V3 (auto negro),negro,correcto

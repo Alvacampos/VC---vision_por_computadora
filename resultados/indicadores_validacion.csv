@@ -1,0 +1,10 @@
+indicador,valor
+Vehículos blancos reales en el video (revisión manual),1
+Eventos 'blanco' registrados,1
+Eventos 'blanco' correctos,1
+Falsos positivos de color (evento 'blanco' sobre vehículo no blanco),0
+Falsos negativos de color (vehículo blanco registrado como 'otro'),0
+Cobertura temporal de V1 (frames visibles con detección 'blanca'),88.7%
+Eventos totales (todos los colores),4
+Eventos útiles / eventos totales,4/4
+Falsos positivos del detector por minuto de video,0.0

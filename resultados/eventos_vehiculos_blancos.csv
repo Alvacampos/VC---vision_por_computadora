@@ -1,0 +1,2 @@
+evento_id,evento,color,frame_inicio,frame_fin,timestamp_inicio,timestamp_fin,minuto,duracion_s,frames_detectado,conf_media,ratio_blanco,track_ids,frame_evidencia,caja_evidencia
+1,aparicion_vehiculo_blanco,blanco,132,1185,00:05.28,00:47.40,0,42.16,923,0.975,0.547,1+5+7,231,"[1041, 395, 1278, 515]"
